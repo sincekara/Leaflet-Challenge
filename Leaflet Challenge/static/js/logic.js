@@ -136,7 +136,7 @@ function createMap(earthquakes) {
       magn = [0, 1, 2, 3, 4],
       labels = ['<strong>Magnitudes</strong>'];
 
-      div.innerHTML += "<h4 style='margin:4px'>Magnitude</h4>"
+      div.innerHTML += "<h4 style='margin:4px'>Magnitudes</h4>"
 
     for (var i = 0; i < magn.length; i++) {
       div.innerHTML +=
