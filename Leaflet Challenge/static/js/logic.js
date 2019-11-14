@@ -1,6 +1,6 @@
 // Storing our API endpoint inside queryUrl
 var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-11-10&endtime=" +
-  "2019-11-12&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
+  "2019-11-13&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
 console.log(queryUrl);
 // Performing a GET request to the query URL
 d3.json(queryUrl, function (data) {
@@ -41,29 +41,29 @@ function createFeatures(earthquakeData) {
     }
   };
 
-  
+
 
   // Creating a GeoJSON layer containing the features array on the earthquakeData object
   // Running the onEachFeature function once for each piece of data in the array
-  
+
   var earthquakes = L.geoJSON(earthquakeData, {
     pointToLayer: function (earthquakeData, latlng) {
-      return L.circle(latlng, {radius: radiusSize(earthquakeData.properties.mag) });
+      return L.circle(latlng, { radius: radiusSize(earthquakeData.properties.mag) });
     },
-        
+
     style: function (geoJsonFeature) {
       return {
-          fillColor: circleColor(geoJsonFeature.properties.mag),
-          fillOpacity: 0.6,
-          weight: 0.5,
-          color: 'black'
+        fillColor: circleColor(geoJsonFeature.properties.mag),
+        fillOpacity: 0.6,
+        weight: 0.5,
+        color: 'black'
       }
 
     },
 
     onEachFeature: onEachFeature
   });
-  
+
 
 
   // Sending our earthquakes layer to the createMap function
@@ -102,11 +102,11 @@ function createMap(earthquakes) {
   // Creating our map, giving it the streetmap and earthquakes layers to display on load
   var myMap = L.map("map", {
     center: [
-      37.09, -95.71
+      38.09, -95.71
     ],
     zoom: 5,
     layers: [lightmap, earthquakes]
-    
+
   });
 
   // Creating a layer control
@@ -121,22 +121,22 @@ function createMap(earthquakes) {
 
   function getColor(d) {
     return d > 4 ? '#900C3F' :
-           d > 3 ? '#FA0505' :
-           d > 2 ? '#FF5733' :
-           d > 1 ? '#FFC300' :
-                   '#DAF7A6' ;
-                    
+      d > 3 ? '#FA0505' :
+        d > 2 ? '#FF5733' :
+          d > 1 ? '#FFC300' :
+            '#DAF7A6';
+
   }
 
-  var legend = L.control({ position: "bottomleft" });
+  var legend = L.control({ position: "bottomright" });
 
   legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
       magn = [0, 1, 2, 3, 4],
-      labels = ['<strong>Magnitudes</strong>'];
+      labels = [];
 
-      div.innerHTML += "<h4 style='margin:4px'>Magnitudes</h4>"
+    div.innerHTML += "<h4 style='margin:4px'>Magnitudes</h4>"
 
     for (var i = 0; i < magn.length; i++) {
       div.innerHTML +=
@@ -147,6 +147,14 @@ function createMap(earthquakes) {
   };
 
   legend.addTo(myMap);
+
+  var north = L.control({ position: "bottomleft" });
+  north.onAdd = function (map) {
+    var div = L.DomUtil.create("div", "info_legend");
+    div.innerHTML = '<img src="north-arrow.jpg">';
+    return div;
+  }
+  north.addTo(myMap);
 
 }
 
