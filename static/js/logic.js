@@ -1,6 +1,6 @@
 // Storing our API endpoint inside queryUrl
-var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-11-10&endtime=" +
-  "2019-11-13&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
+var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-11-15&endtime=" +
+  "2019-11-18&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
 console.log(queryUrl);
 // Performing a GET request to the query URL
 d3.json(queryUrl, function (data) {
